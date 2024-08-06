@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterDataExt_v2", "MasterDataExt_v2\MasterDataExt_v2.csproj", "{D39B05D1-802A-4C50-AE15-2669C456C021}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D39B05D1-802A-4C50-AE15-2669C456C021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D39B05D1-802A-4C50-AE15-2669C456C021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D39B05D1-802A-4C50-AE15-2669C456C021}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D39B05D1-802A-4C50-AE15-2669C456C021}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86715403-FDB7-4BA7-9B6A-CD8AAC29622E}
+	EndGlobalSection
+EndGlobal

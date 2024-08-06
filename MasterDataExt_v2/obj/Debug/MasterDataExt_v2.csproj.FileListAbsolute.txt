@@ -1,0 +1,10 @@
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\obj\Debug\MasterDataExt_v2.csproj.AssemblyReference.cache
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\obj\Debug\MasterDataExt_v2.Main.resources
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\obj\Debug\MasterDataExt_v2.Properties.Resources.resources
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\obj\Debug\MasterDataExt_v2.csproj.GenerateResource.cache
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\obj\Debug\MasterDataExt_v2.csproj.CoreCompileInputs.cache
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\bin\Debug\MasterDataExt_v2.exe.config
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\bin\Debug\MasterDataExt_v2.exe
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\bin\Debug\MasterDataExt_v2.pdb
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\obj\Debug\MasterDataExt_v2.exe
+C:\Users\RCS\source\repos\MasterDataExt_v2\MasterDataExt_v2\obj\Debug\MasterDataExt_v2.pdb
