@@ -59,7 +59,6 @@ namespace MasterDataExt_v2
 				});
 				if (this.iniFile.GetSetting("Data", "Items") == "YES")
 				{
-					logTextBox("Please wait while extracting Item Master data...");
 					await Task.Run(() => ProcessExtractItem(Conn));
 					logTextBox("Item Master File generated successfully! \r\nITEMS OK");
 
@@ -119,10 +118,11 @@ namespace MasterDataExt_v2
 
 			try
 			{
+				logTextBox("Please wait while extracting Item Master data...");
 				string strQuery = "[dbo].[RCS_EXTRACT_ITEMMASTER]";
 				SqlCommand cmd = new SqlCommand(strQuery, Conn)
 				{
-					CommandType = CommandType.StoredProcedure, CommandTimeout = 0
+					CommandType = CommandType.StoredProcedure
 				};
 
 				using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
@@ -133,6 +133,7 @@ namespace MasterDataExt_v2
 
 					if (dt.Rows.Count > 0)
 					{
+						logTextBox($"Processing data and writing {strFileName} file...");
 						using (StreamWriter sw = new StreamWriter(path, false))
 						{
 							sw.WriteLine(string.Join(sepChar, dt.Columns.Cast<DataColumn>().Select(col => col.ColumnName)));
@@ -141,6 +142,8 @@ namespace MasterDataExt_v2
 							{
 								sw.WriteLine(string.Join(sepChar, row.ItemArray.Select(field => field.ToString())));
 							}
+
+							logTextBox($"Data written in {strFileName} successfully.");
 						}
 						if (!File.Exists(BingoFile1))
 						{
@@ -148,6 +151,7 @@ namespace MasterDataExt_v2
 							{
 								await sw.WriteLineAsync(DateTime.Today.ToString());
 							}
+							logTextBox($"{BingoFile1} created successfully!");
 						}
 					}
 				}
