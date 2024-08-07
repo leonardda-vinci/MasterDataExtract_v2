@@ -60,7 +60,6 @@ namespace MasterDataExt_v2
 				if (this.iniFile.GetSetting("Data", "Items") == "YES")
 				{
 					await Task.Run(() => ProcessExtractItem(Conn));
-					logTextBox("Item Master File generated successfully! \r\nITEMS OK");
 
 					logTextBox("Closing Database Connection...");
 					Conn.Close();
@@ -120,41 +119,56 @@ namespace MasterDataExt_v2
 			{
 				logTextBox("Please wait while extracting Item Master data...");
 				string strQuery = "[dbo].[RCS_EXTRACT_ITEMMASTER]";
-				SqlCommand cmd = new SqlCommand(strQuery, Conn)
+
+				SqlCommand cmd = new SqlCommand(strQuery, Conn);
+				cmd.CommandType = CommandType.StoredProcedure;
+				SqlDataAdapter sda = new SqlDataAdapter(cmd);
+				sda.SelectCommand.CommandTimeout = 0;
+				DataTable table = new DataTable();
+				await Task.Run(() => sda.Fill(table));
+
+				MessageBox.Show("Data retrieval completed! Rows retrieved: " + table.Rows.Count);
+
+				StreamWriter writer = new StreamWriter(path);
+				string sep = "";
+				StringBuilder builder = new StringBuilder();
+				foreach (DataColumn col in table.Columns)
 				{
-					CommandType = CommandType.StoredProcedure
-				};
-
-				using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-				{
-					sda.SelectCommand.CommandTimeout = 0;
-					DataTable dt = new DataTable();
-					sda.Fill(dt);
-
-					if (dt.Rows.Count > 0)
-					{
-						logTextBox($"Processing data and writing {strFileName} file...");
-						using (StreamWriter sw = new StreamWriter(path, false))
-						{
-							sw.WriteLine(string.Join(sepChar, dt.Columns.Cast<DataColumn>().Select(col => col.ColumnName)));
-
-							foreach (DataRow row in dt.Rows)
-							{
-								sw.WriteLine(string.Join(sepChar, row.ItemArray.Select(field => field.ToString())));
-							}
-
-							logTextBox($"Data written in {strFileName} successfully.");
-						}
-						if (!File.Exists(BingoFile1))
-						{
-							using (StreamWriter sw = File.CreateText(BingoFile1))
-							{
-								await sw.WriteLineAsync(DateTime.Today.ToString());
-							}
-							logTextBox($"{BingoFile1} created successfully!");
-						}
-					}
+					builder.Append(sep).Append(col.ColumnName);
+					sep = sepChar;
 				}
+				builder.AppendLine();
+				writer.Write(builder.ToString());
+
+				builder.Clear();
+
+				foreach (DataRow row in table.Rows)
+				{
+					sep = "";
+					foreach (DataColumn col in table.Columns)
+					{
+						builder.Append(sep).Append(row[col.ColumnName]);
+						sep = sepChar;
+					}
+					writer.WriteLine(builder.ToString());
+					builder.Clear();
+				}
+				writer.Close();
+
+				if (File.Exists(path))
+				{
+					File.Delete(path);
+				}
+
+				if (!File.Exists(BingoFile1))
+				{
+					FileInfo bingoLog = new FileInfo(BingoFile1);
+					writer = bingoLog.CreateText();
+
+					writer.WriteLine(DateTime.Today.ToString() + "");
+					writer.Close();
+				}
+				logTextBox("Item Master File generated successfully! \r\nITEMS OK");
 			}
 			catch (Exception err)
 			{
@@ -162,7 +176,7 @@ namespace MasterDataExt_v2
 			}
 		}
 
-		private bool ProcessExtractSupplier(SqlConnection Conn)
+		/*private bool ProcessExtractSupplier(SqlConnection Conn)
 		{
 			string DestPath = this.iniFile.GetSetting("Data", "DestPath");
 			string BingoFile2 = DestPath + "master_supplier.bingo";
@@ -325,7 +339,7 @@ namespace MasterDataExt_v2
 					sw.Close();
 				}
 			}
-		}
+		}*/
 
 		private void Main_Load(object sender, EventArgs e)
 		{
